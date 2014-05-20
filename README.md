@@ -1,7 +1,7 @@
 Parse Angular Patch
 =========
 
-Brought to you by the [BRANDiD](https://www.getbrandid.com) team
+Brought to you by the [BRANDiD](https://www.getbrandid.com) team, updated by [MomentoDeals](https://www.momentodeals.com)
 
   - Seamless Parse integration with AngularJS, using promises ($q)
   - Never worry about $scope digests again
@@ -12,10 +12,10 @@ Brought to you by the [BRANDiD](https://www.getbrandid.com) team
 How to use
 ----
 
-I. [Grab the latest version of the patch here](https://raw2.github.com/brandid/parse-angular-patch/master/dist/parse-angular.js) or install it using [Bower](http://bower.io/)
+I. [Grab the latest version of the patch here](https://raw2.github.com/momentodeals/parse-angular-patch/master/dist/parse-angular.js) or install it using [Bower](http://bower.io/)
 
 ```
-bower install parse-angular-patch
+bower install git://github.com/momentodeals/parse-angular-patch.git
 ```
 
 II. Include the module in your project
@@ -61,7 +61,7 @@ angular.module('myApp', ['ngAnimate', 'parse-angular', 'parse-angular.enhance'])
 
 ### Auto generate getters & setters
 
-Nothing simpler, just attach an array of attributes to your Object definition, and the enhancer will generate according getters/setters. Please note that the first letter of your attribute will be transformed to uppercase.
+Nothing simpler, just attach an array of attributes to your Object definition, and the enhancer will generate ECMAscript 5 property getters/setters, making your Object ng-model compatible (unsopported in < IE9, < FF4, < Safari5, < Opera12, Konqueror)
 
 ```javascript
 Parse.Object.extend({
@@ -72,12 +72,12 @@ Parse.Object.extend({
 
 var myMonster = new Parse.Object("Monster");
 // You can do :
-myMonster.getKind();
-myMonster.getName();
-myMonster.setPlace_of_birth('London');
+myMonster.kind;
+myMonster.name;
+myMonster.place_of_birth = 'London';
 ```
 
-Please note that if you already set a getter or setter on the Object, it won't be overrided. It is just a double-check protection, otherwise just don't add the attribute to your attrs array.
+Whenever these properties are read or written, the compatible Parse getter/setter functions will be called.
 
 
 ### collection.loadMore
