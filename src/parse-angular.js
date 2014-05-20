@@ -139,7 +139,7 @@
 						/// Generate setters & getters
 						Parse._.each(attrs, function(currentAttr){
 
-							Object.defineProperty(deal.prototype, currentAttr, {
+							Object.defineProperty(newClass.prototype, currentAttr, {
 								get: function() {
 									return this.get(currentAttr);
 								},
