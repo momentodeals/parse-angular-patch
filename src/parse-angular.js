@@ -127,12 +127,6 @@
 					return Parse.Object._classMap[className];
 				};
 
-				///// CamelCaseIsh Helper
-				function capitaliseFirstLetter(string) {
-		        return string.charAt(0).toUpperCase() + string.slice(1);
-		    }
-
-
 				///// Override orig extend
 				var origObjectExtend = Parse.Object.extend;
 
@@ -145,27 +139,21 @@
 						/// Generate setters & getters
 						Parse._.each(attrs, function(currentAttr){
 
-							var field = capitaliseFirstLetter(currentAttr);
-
-							// Don't override if we set a custom setters or getters
-							if(!newClass.prototype['get' + field]) {
-								newClass.prototype['get' + field] = function() {
+							Object.defineProperty(deal.prototype, currentAttr, {
+								get: function() {
 									return this.get(currentAttr);
-								};
-							}
-							if(!newClass.prototype['set' + field]) {
-								newClass.prototype['set' + field] = function(data) {
-									this.set(currentAttr, data);
-									return this;
+								},
+								set: function(value) {
+									this.set(currentAttr, value);
 								}
-							}
+							});
 
 						});
 					}
 
 
 					return newClass;
-				}
+				};
 
 
 
@@ -190,7 +178,7 @@
 
 				Parse.Collection.getClass = function(className) {
 					return Parse.Collection._classMap[className];
-				}
+				};
 
 
 				/// Enhance Collection prototype
@@ -212,7 +200,7 @@
 
 							return this.query.find()
 							.then(function(newModels){
-								if (!opts || opts.add !== false) _this.add(newModels)
+								if (!opts || opts.add !== false) _this.add(newModels);
 								if (newModels.length < currentLimit) _this.hasMoreToLoad = false;
 								return newModels;
 							});
